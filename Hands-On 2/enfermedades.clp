@@ -13,21 +13,18 @@
     (enfermedad (nombre "Sinusitis") (signos dolor-de-cabeza congestion-nasal) (sintomas fiebre tos))
 )
 
-
-
-(defrule reading-input
-   =>
-   (printout t "Ingresa el nombre de la enfermedad a buscar: " )
-   (assert (name (read)))
-)
-
-(defrule checking-input
-   (name ?Name)
+(defrule ver_enfermedades
    (enfermedad (nombre ?Nombre) (signos $?Signos) (sintomas $?Sintomas))
-   (test (member$ ?Name ?Nombre))
     =>
     (printout t "Enfermedad: " ?Nombre crlf)
     (printout t "Signos: " $?Signos crlf)
     (printout t "Síntomas: " $?Sintomas crlf)
-)    
+)   
+
+(defrule eliminar_enfermedad
+    ?eliminar <- (enfermedad (nombre ?Nombre) (signos $?Signos) (sintomas $?Sintomas))
+    =>
+    (printout t "Se eliminara la enfermedad: " ?Nombre crlf)
+    (retract ?eliminar)
+)
 
